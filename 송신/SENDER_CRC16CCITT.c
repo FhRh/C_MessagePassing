@@ -87,7 +87,7 @@ uint16_t crc16_ccitt(const uint8_t *data, size_t length)
     return crc ^ XOR_OUT;
 }
 
-char** create_codeword()
+uint8_t** create_codeword()
 {
     int **data_int = FileIntConversion();
 
@@ -99,17 +99,15 @@ char** create_codeword()
             data_byte[i][j] = (uint8_t)data_int[i][j]; // 정수형 배열의 값을 uint8_t 배열로 변환하여 저장
         }
     }
-
-    //data_byte를 문자열로 변환
-    char data_str[row][col+1];
-    for(int i=0; i<row; i++){
-        sprintf(data_str[i], "%s", (char*)data_byte[i]); // 각 요소를 2자리 16진수로 변환하여 문자열에 추가
-    }
-    //결과 출력
+    // 결과 출력
     // for(int i=0; i<row; i++){
-    //         printf("%s\n",data_str[i]);
+    //     printf("row : %d\n" ,i);
+    //     for(int j=0; j<col; j++){
+    //         printf("%02x ",data_byte[i][j]);
+    //     }
+    //     printf("\n");
     // }
-    
+    // printf("%d",col);
     
     
     // CRC를 계산
@@ -117,43 +115,32 @@ char** create_codeword()
     uint16_t crc_byte[row]; 
     for(int i=0; i<row; i++){
         crc_byte[i] = crc16_ccitt(data_byte[i], col);
-        //printf("CRC: %04x\n", crc_byte[i]);
+        // printf("%d CRC: %04x\n", i, crc_byte[i]);
     }
-
-    //crc_byte를 문자열로 변환
-    char crc_str[row][3];
-    char temp[row][3];
-    for(int i=0; i<row; i++){
-        if(crc_byte[i]^0x80==0){
-            sprintf(temp[i], "%hu", crc_byte[i]<<1);
-        }
-        else{
-            sprintf(temp[i], "%hu", crc_byte[i]);
-        }
-        for (int j = 0; j < 2; j++) {
-            crc_str[i][j] = temp[i][j] + '0'; // ASCII 코드로 변환
-        }
-        crc_str[i][2] = '\0'; 
-        printf("Encoded string: %s\n", crc_str[i]);
-    }
-
-    //문자열을 이어붙여 CodeWord만들고 반환
+    
+    //CodeWord만들고 반환
     //codeword 메모리 동적 할당 및 초기화
-    char **codeword = (char**)malloc((row) * sizeof(char *));;
-    for (int i = 0; i < row; i++) {
-        codeword[i] = (char *)malloc(col * sizeof(char));
-        strcpy(codeword[i],data_str[i]);
-        strcat(codeword[i],crc_str[i]);
-        // printf("cut\n");
-        // printf("%s\n",codeword[i]);
+    uint8_t **codeword = (uint8_t**)malloc((row)*sizeof(uint8_t*)); 
+    for(int i=0; i<row; i++){
+        uint16_t crc = crc_byte[i];
+        int endpoint=0;
+        
+        codeword[i] = (uint8_t *)malloc((BLOCK_SIZE+2) * sizeof(uint8_t));//넉넉하게
+        for(int j=0; j<BLOCK_SIZE; j++){
+            codeword[i][j] = data_byte[i][j];
 
-        uint8_t codeword_byte[1027];
-        for(int j=0; j<1027; j++){
-            codeword_byte[j]=(uint8_t)codeword[j];
-            printf("%d ", codeword_byte[j]);
         }
-        printf("\ncut\n");
+            codeword[i][BLOCK_SIZE] = (crc>>8)&0xFF;
+            codeword[i][BLOCK_SIZE+1] = crc&0xFF;
     }
+    //CodeWord결과 출력
+    // for(int i=0; i<row; i++){
+    //     printf("row : %d\n crc : %04x\n ", i,crc_byte[i]);
+    //     for(int j=0; j<1026; j++){
+    //         printf("%02x ",codeword[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 
     return codeword;
 }
