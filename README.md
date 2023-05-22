@@ -15,12 +15,18 @@ C언어 CRC_CCITT16 MessagePassing 프로그램
 사용 방법
 --
 1. 저장소를 클론 합니다.
-2. Receiver.c 코드를 빌드 및 실행합니다.
-3. Sender.c 코드를 빌드 및 실행합니다.
-4. 터미널을 통해 출력을 확인합니다.
+2. fp = fopen("crysis_3_concrete_skeletons_by_pino44io_d8a5041-pre.jpg", "rb");
+  - 해당 줄에 변환할 파일의 경로를 입력합니다.
+3. Receiver.c 코드를 빌드 및 실행합니다.
+4. Sender.c 코드를 빌드 및 실행합니다.
+5. 터미널을 통해 출력을 확인합니다.
 
 요구 사항
 --
 - 해당 프로그램은 WinAPI를 사용하므로 윈도우 환경에서만 유효합니다.
-- 
+- C언어를 사용하므로 이를 위한 환경이 필요합니다.
+
+결론
+--
+이 데이터를 C언어로 MessagePassing, CRC_CCITT16, WinAPI, FileConversion, Stop&Wait 기법등을 직접 실습해볼 수 있습니다.
 
