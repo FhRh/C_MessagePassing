@@ -28,5 +28,5 @@ C언어 CRC_CCITT16 MessagePassing 프로그램
 
 결론
 --
-이 데이터를 C언어로 MessagePassing, CRC_CCITT16, WinAPI, FileConversion, Stop&Wait 기법등을 직접 실습해볼 수 있습니다.
+이 데이터를 통해 C언어로 MessagePassing, CRC_CCITT16, WinAPI, FileConversion, Stop&Wait 기법등을 직접 실습해볼 수 있습니다.
 
