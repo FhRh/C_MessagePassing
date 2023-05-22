@@ -1,7 +1,7 @@
 #include <windows.h>
 #include "SENDER_CRC16CCITT.c"
 
-#define TIMEOUT_DURATION 5000
+#define TIMEOUT_DURATION 1000
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 void sendLargeString(HWND hWnd, const uint8_t* data_kbytes, int index);
@@ -59,23 +59,12 @@ int main()
         DWORD startTime = GetTickCount(); // 현재 시간을 기록
         
         while (waitForResponse) {
-            //메시지를 전송 받았으면
+            //응답 메시지를 받으면
             if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
-
-                if(!waitForResponse){
-                    currentIndex++;
-                    if(currentIndex>=row){
-                        printf("Received All\n");
-                        break;
-                    }
-                    else{
-                        printf("ok %d\n", currentIndex);
-                        break;
-                    }
-                }
             }
+            //응답을 받지 못하면
             else{
                 DWORD currentTime = GetTickCount();
                 if (currentTime - startTime >= TIMEOUT_DURATION) {
@@ -99,7 +88,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 // 응답을 수신했으므로 다음 데이터를 전송할 수 있도록 플래그 변경
                 waitForResponse = 0;
                 resendingCount=0;
-                printf("ACK received\n");
+                currentIndex++;
+                printf("ACK received : %d\n", wParam);
+
             }
             
             return 0;

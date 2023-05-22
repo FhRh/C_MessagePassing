@@ -65,8 +65,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     error_count++;
                 }
                 printf("index : %d %s ",index, result==0?"OK":"ERROR");
-                printf("/ error_count : %d\n", error_count);
-                printf("receiveCount : %d\n",receiveCount);
+                printf("/ error_count : %d ", error_count);
+                printf("/ receiveCount : %d\n",receiveCount);
 
                 HWND hwndSender = FindWindow("sender", "sender");
                 if (hwndSender == NULL) {
