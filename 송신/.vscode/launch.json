@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/yiyop/OneDrive/바탕 화면/C_MessagePassing(CRC-16-CCITT)2/송신",
-      "program": "c:/Users/yiyop/OneDrive/바탕 화면/C_MessagePassing(CRC-16-CCITT)2/송신/build/Debug/outDebug",
+      "cwd": "c:/Users/yiyop/OneDrive/바탕 화면/C_MessagePassing/송신",
+      "program": "c:/Users/yiyop/OneDrive/바탕 화면/C_MessagePassing/송신/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
